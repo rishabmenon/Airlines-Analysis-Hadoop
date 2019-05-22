@@ -1,0 +1,113 @@
+1) create database airlineProjectTCS
+
+--------------------------------------------------------------------------------------------------------
+
+2) Creating and Loading data for  airports_mod.dat 
+
+create table airportsTable
+(AirportID  bigint, Name string,  City string, Country string, IATA varchar(3), ICAO varchar(4), 
+ Latitude double, Longitude double, Altitude bigint, Timezone double, DST varchar(1), Tz string)
+row format delimited fields terminated by ","
+lines terminated by "\n"
+ 
+load data local inpath "airports_mod.dat" into table airportsTable
+
+---------------------------------------------------------------------------------------------------------
+3) Creating and Loading data for  Final_airlines
+
+
+
+create table finalAirlines(
+airlineID bigint, name string, alias string, iata varchar(2), icao varchar(3),
+callsign string, country string, active varchar(1))
+row format delimited fields terminated by ","
+lines terminated by "\n"
+ 
+
+load data local inpath "Final_airlines" into table finalAirlines
+
+----------------------------------------------------------------------------------------------------------
+
+4) Creating and Loading data for routes.dat
+
+
+create table routes(
+airline varchar(3), airlineID bigint, source varchar(4), sourceID bigint,
+destination varchar(4), destinationID bigint, codeshare varchar(1), stops int,
+equipment varchar(3))
+row format delimited fields terminated by ","
+lines terminated by "\n"
+
+load data local inpath "routes.dat"into table routes
+
+
+-----------------------------------------------------------------------------------------------------------
+
+
+Problem Statemet A
+
+
+select airportID, Name, City 
+from airportsTable
+where country="India" 
+
+
+-----------------------------------------------------------------------------------------------------------
+
+Problem Statement B
+
+
+select distinct(a.airlineid),a.name
+from finalairlines a join routes on 
+a.airlineid=routes.airlineid 
+where stops=0
+
+-----------------------------------------------------------------------------------------------------------
+
+Problem Statement C
+
+
+select distinct(a.airlineid),a.name
+from finalairlines a join routes on 
+a.airlineid=routes.airlineid 
+where codeshare='Y'
+
+------------------------------------------------------------------------------------------------------------
+
+Problem Statement D
+
+
+select country, count(*) as A
+from airportstable
+group by country
+order by A desc limit 1 
+
+
+------------------------------------------------------------------------------------------------------------
+
+Problem Statement E
+
+select airlineid, name
+from finalairlines
+where country="United States" AND active="Y"
+
+------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
